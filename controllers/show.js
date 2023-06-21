@@ -49,6 +49,16 @@ const controller = {
         return res.status(200).send({show: updatedShow})
       })
       .catch(error => res.status(500).send({message: `Error while updating ${error}`}))
+  },
+  deleteShow: function (req, res) {
+    let showId = req.params.id
+
+    Show.findByIdAndRemove(showId)
+      .then(removedShow => {
+        if (!removedShow) return res.status(404).send({message: "The show does not exist"})
+        return res.status(200).send({show: removedShow})
+      })
+      .catch(err => res.status(500).send({message: "Error while deleting"}))
   }
 }
 
