@@ -23,7 +23,6 @@ const controller = {
   saveShow: function (req, res) {
     let show = new Show()
     const {name, episodes, cast} = req.body
-
     if (name && episodes) {
       show.name = name
       show.episodes = episodes
@@ -39,7 +38,17 @@ const controller = {
     } else {
       return res.status(400).send({message: "Data is not right"})
     }
+  },
+  updateShow: function (req, res) {
+    let showId = req.params.id
+    let update = req.body
 
+    Show.findByIdAndUpdate(showId, update, {returnDocument: 'after'})
+      .then(updatedShow => {
+        if(!updatedShow) return res.status(404).send({message: "The document does not exist"})
+        return res.status(200).send({show: updatedShow})
+      })
+      .catch(error => res.status(500).send({message: `Error while updating ${error}`}))
   }
 }
 

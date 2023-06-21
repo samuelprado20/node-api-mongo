@@ -6,5 +6,6 @@ const router = Router()
 router.get('/', ShowController.getShows)
 router.get('/:id?', ShowController.getShow)
 router.post('/save-show', ShowController.saveShow)
+router.put('/edit-show/:id?', ShowController.updateShow)
 
 module.exports = router
